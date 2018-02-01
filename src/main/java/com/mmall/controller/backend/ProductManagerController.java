@@ -44,7 +44,7 @@ public class ProductManagerController {
         if (iUserService.checkAdminRole(user).isSuccess()) {
             return iProductService.saveOrUpdateProduct(product);
         } else {
-            return ServerResponse.createByErrorMessage("无权限操作");
+            return ServerResponse.createByErrorMessage("无权限操作");git
         }
     }
 
