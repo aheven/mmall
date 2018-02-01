@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/manage/user")
+@RequestMapping("/manager/user")
 public class UserManagerController {
     @Autowired
     private IUserService iUserService;
