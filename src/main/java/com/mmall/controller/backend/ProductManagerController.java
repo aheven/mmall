@@ -84,7 +84,7 @@ public class ProductManagerController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登陆，请登陆管理员");
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
-            return iProductService.getProductList(pageNum, pageSize);
+            return iProductService.getProductList(pageNum, pageSize, true);
         } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }

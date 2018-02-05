@@ -115,14 +115,16 @@ public class ProductServiceImpl implements IProductService {
         return productDetailVo;
     }
 
-    public ServerResponse<PageInfo> getProductList(int pageNum, int pageSize) {
+    public ServerResponse<PageInfo> getProductList(int pageNum, int pageSize, boolean isAdmin) {
         PageHelper.startPage(pageNum, pageSize);
         List<Product> productList = productMapper.selectList();
 
         List<ProductListVo> productListVoList = Lists.newArrayList();
         for (Product product : productList) {
-            ProductListVo productListVo = assembleProductListVo(product);
-            productListVoList.add(productListVo);
+            if (isAdmin || product.getStatus() == Const.ProductStatusEnum.ON_SALE.getCode()) {
+                ProductListVo productListVo = assembleProductListVo(product);
+                productListVoList.add(productListVo);
+            }
         }
         PageInfo pageResult = new PageInfo<>(productListVoList);
         return ServerResponse.createBySuccess(pageResult);
@@ -205,7 +207,7 @@ public class ProductServiceImpl implements IProductService {
         }
         List<Product> productList = productMapper.selectByNameAndCategoryIds(StringUtils.isBlank(keyword) ? null : keyword, categoryIdList.size() == 0 ? null : categoryIdList);
         List<ProductListVo> productListVoList = Lists.newArrayList();
-        for(Product product:productList){
+        for (Product product : productList) {
             ProductListVo productListVo = assembleProductListVo(product);
             productListVoList.add(productListVo);
         }
